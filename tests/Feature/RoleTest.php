@@ -50,7 +50,8 @@ class RoleTest extends TestCase
         $user = User::role('staff')->get()->random();
         $this->actingAs($user);
         $response = $this->get('/roles/create')
-            ->assertStatus(403);
+            ->assertStatus(403)
+            ->assertSeeText('unauthorized.');
     }
 
     function testCannotCreateRoleNotLogin()
