@@ -19,7 +19,7 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         $this->authorize('Read');
-        return view('roles.index');
+        return view('konfigurasi.role');
     }
 
     /**
