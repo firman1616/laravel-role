@@ -1,5 +1,12 @@
-@extends('layouts.master')
+@extends('layouts.master');
+@push('css');
+{{-- <link rel="stylesheet" href="{{asset('./vendor/chart.js/dist/Chart.min.css')}} "> --}}
+<link href="{{asset('/vendor/datatables.net-dt/css/jquery.dataTables.min.css')}} " rel="stylesheet" />
+<link href="{{asset('/vendor/datatables.net-responsive-dt/css/responsive.dataTables.min.css')}} " rel="stylesheet" />
+@endpush
+
 @section('content')
+
 <div class="main-content">
     <div class="title">
         Konfigurasi
@@ -12,40 +19,27 @@
                         <h4>Roles</h4>
                     </div>
                     <div class="card-body">
-                        <canvas id="myChart" height="642" width="1388"></canvas>
+                        {{ $dataTable->table() }}
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Statistics</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="progress-wrapper">
-                            <h4>Progress 25%</h4>
-                            <div class="progress progress-bar-small">
-                                <div class="progress-bar progress-bar-small" style="width: 25%" role="progressbar"
-                                    aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="progress-wrapper">
-                            <h4>Progress 45%</h4>
-                            <div class="progress progress-bar-small">
-                                <div class="progress-bar progress-bar-small bg-pink" style="width: 45%"
-                                    role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                                </div>
-                            </div>
-                        </div>
-                        <canvas id="myChart2" height="842" width="1388"></canvas>
-
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
 
 </div>
     
 @endsection
+
+@push('js')
+<script src=" {{asset('/vendor/jquery/dist/jquery.min.js')}} "></script>
+<script src=" {{asset('/vendor/datatables.net/js/jquery.dataTables.min.js')}} "></script>
+<script src=" {{asset('/vendor/datatables.net-responsive/js/dataTables.responsive.min.js')}} "></script>
+<script src=" {{asset('/assets/js/page/datatables.js')}} "></script>
+{{$dataTable->scripts()}}
+{{-- <script src="{{asset('./vendor/chart.js/dist/Chart.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="{{asset('./assets/js/page/index.js')}} "></script>     --}}
+
+
+@endpush
