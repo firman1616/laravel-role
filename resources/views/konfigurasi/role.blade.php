@@ -19,6 +19,9 @@
                         <h4>Roles</h4>
                     </div>
                     <div class="card-body">
+                        @if (request()->user()->can('Create'))
+                            <button type="button" class="btn btn-primary mb-3"><i class="ti-plus"></i> | Tambah Data</button>
+                        @endif
                         {{ $dataTable->table() }}
                     </div>
                 </div>

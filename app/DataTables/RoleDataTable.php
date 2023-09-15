@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -24,8 +25,24 @@ class RoleDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
         ->setRowId('id')
+        ->editColumn('created_at', function ($row) {
+            return $row->created_at->format('d-m-Y H:i:s');
+        })
+        ->editColumn('updated_at', function ($row) {
+            return $row->updated_at->format('d-m-Y H:i:s');
+        })
         ->addIndexColumn()
-        ->addColumn('action', 'role.action');
+        ->addColumn('action', function ($row) {
+            $action = '';
+            if (Gate::allows('Update')) {
+                $action = '<button type="button" class="btn btn-warning btn-sm" title="Edit Data"><i class="ti-pencil"></i></button>';
+                
+            }
+            if (Gate::allows(('Delete'))) {
+                $action .= ' <button type="button" class="btn btn-danger btn-sm" title="Hapus Data"><i class="ti-trash"></i></button>';
+            }
+            return $action;
+        });
     }
 
     /**
