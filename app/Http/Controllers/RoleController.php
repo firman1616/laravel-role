@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\RoleDataTable;
+use App\Models\Role;
 use Illuminate\Http\Request;
+use App\DataTables\RoleDataTable;
 
 class RoleController extends Controller
 {
@@ -61,9 +62,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
-        //
+        return view('konfigurasi.role-action',compact('role'));
     }
 
     /**
@@ -73,9 +74,16 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
-        //
+        $role->name = $request->name;
+        $role->guard_name = $request->guard_name;
+        $role->save();
+
+        return response()->json([
+            'status' => 'Success',
+            'message' => 'Data Updated'
+        ]);
     }
 
     /**

@@ -35,11 +35,11 @@ class RoleDataTable extends DataTable
         ->addColumn('action', function ($row) {
             $action = '';
             if (Gate::allows('Update')) {
-                $action = '<button type="button" class="btn btn-warning btn-sm" title="Edit Data"><i class="ti-pencil"></i></button>';
+                $action = '<button type="button" class="btn btn-warning btn-sm action" data-id='.$row->id.' data-jenis="Edit" title="Edit Data"><i class="ti-pencil"></i></button>';
                 
             }
             if (Gate::allows(('Delete'))) {
-                $action .= ' <button type="button" class="btn btn-danger btn-sm" title="Hapus Data"><i class="ti-trash"></i></button>';
+                $action .= ' <button type="button" class="btn btn-danger btn-sm action" data-id='.$row->id.' data-jenis="Hapus" title="Hapus Data"><i class="ti-trash"></i></button>';
             }
             return $action;
         });

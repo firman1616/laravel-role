@@ -31,6 +31,13 @@
     </div>
 
 </div>
+
+<div class="modal fade" id="modalAction" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        
+    </div>
+</div>
     
 @endsection
 
@@ -44,5 +51,46 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="{{asset('./assets/js/page/index.js')}} "></script>     --}}
 
+<script>
+    const modal = new bootstrap.Modal($('#modalAction'))
+    $('#role-table').on('click','.action',function () {
+        let data = $(this).data()
+        let id = data.id
+        let jenis = data.jenis
+
+        $.ajax({
+            method: 'GET',
+            url: `{{url('konfigurasi/roles/')}}/${id}/edit`,
+            success: function (res) {
+                $('#modalAction').find('.modal-dialog').html(res)
+                modal.show()
+                store()
+            }
+        })
+
+    })
+
+    function store() {
+        $('#formAction').on('submit', function (e) {
+            let id = data.id
+            e.preventDefault()
+            const _form = this
+            const formData = new formData(_form)
+            
+            $.ajax({
+                method: 'POST',
+                url: `{{ url('konfigurasi/roles/') }}/${id}`,
+                headers: {'X-CSRF-TOKEN':$('meta[nem="csrf-token"]').attr('content')},
+                data: formData,
+                prosessData: false,
+                contentType: false,
+                success: function (res) {
+                    window.LaravelDataTables["role-table"].ajax.reload()
+                    modal.hide()
+                }
+            })
+        })
+    }
+</script>
 
 @endpush
