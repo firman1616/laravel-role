@@ -23,7 +23,7 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            @can('Read Config')    
+            {{-- @can('Read Config')    
             <li class="{{ request()->segment(1) == 'konfigurasi' ? 'active open' : '' }}">
                 <a href="#" class="main-menu has-dropdown">
                     <i class="ti-desktop"></i>
@@ -35,7 +35,22 @@
                     @endcan
                 </ul>
             </li>
-            @endcan
+            @endcan --}}
+            @foreach (getMenus() as $menu)
+            <li class="{{ request()->segment(1) == $menu->url ? 'active open' : '' }}">
+                <a href="#" class="main-menu has-dropdown">
+                    <i class="ti-desktop"></i>
+                    <span>{{$menu->name}}</span>
+                </a>
+                <ul class="sub-menu {{ request()->segment(1) == 'konfigurasi' ? 'expand' : '' }} ">
+                    @foreach ($menu->subMenus as $submenu)
+                    
+                    <li class="{{ request()->segment(1) == explode('/', $submenu->url)[0] && request()->segment(2) == explode('/', $submenu->url)[1] ? 'active' : '' }}"><a href="{{ $submenu->url }}" class="link"><span>{{ $submenu->name }} </span></a></li>
+                    @endforeach
+                    
+                </ul>
+            </li>
+            @endforeach
         </ul>
     </div>
 </nav>
